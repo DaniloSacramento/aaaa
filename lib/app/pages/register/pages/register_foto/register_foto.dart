@@ -186,6 +186,7 @@ class _RegisterFotoState extends State<RegisterFoto> {
                             style: GoogleFonts.dosis(
                               textStyle: const TextStyle(
                                 fontSize: 17,
+                                color: Colors.black
                               ),
                             ),
                           ),

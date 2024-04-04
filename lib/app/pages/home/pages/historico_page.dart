@@ -42,7 +42,8 @@ class _HistoricoPageState extends State<HistoricoPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Sem conexão com a internet'),
-            content: Text('Verifique sua conexão com a internet e tente novamente.'),
+            content:
+                Text('Verifique sua conexão com a internet e tente novamente.'),
             actions: <Widget>[
               TextButton(
                 child: Text('OK'),
@@ -58,7 +59,8 @@ class _HistoricoPageState extends State<HistoricoPage> {
   }
 
   _getUser() async {
-    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
     final result = sharedPreferences.getString('data');
     user = UserPromote.fromMap(jsonDecode(result!)['data']);
     DateTime dataInicial = DateTime.now().subtract(Duration(days: 30));
@@ -81,7 +83,8 @@ class _HistoricoPageState extends State<HistoricoPage> {
       (timeStamp) {
         _getUser();
 
-        dtFinalController.text = DateFormat('dd/MM/yyyy').format(DateTime.now());
+        dtFinalController.text =
+            DateFormat('dd/MM/yyyy').format(DateTime.now());
         DateTime dataInicial = DateTime.now().subtract(Duration(days: 30));
         dtInicialController.text = DateFormat('dd/MM/yyyy').format(dataInicial);
       },
@@ -161,11 +164,11 @@ class _HistoricoPageState extends State<HistoricoPage> {
         ],
         automaticallyImplyLeading: false,
         backgroundColor: darkBlueColor,
-       title: Image.asset(
-            F.imageComLogoBranca,
-            height: 100,
-            width: 250,
-          ),
+        title: Image.asset(
+          F.imageComLogoBranca,
+          height: 100,
+          width: 250,
+        ),
         centerTitle: true,
       ),
       body: Column(
@@ -175,7 +178,11 @@ class _HistoricoPageState extends State<HistoricoPage> {
             padding: const EdgeInsets.all(12.0),
             child: Text(
               'Histórico de Acesso',
-              style: GoogleFonts.dosis(textStyle: TextStyle(color: darkBlueColor, fontSize: 26, fontWeight: FontWeight.bold)),
+              style: GoogleFonts.dosis(
+                  textStyle: TextStyle(
+                      color: darkBlueColor,
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold)),
             ),
           ),
           Padding(
@@ -185,7 +192,11 @@ class _HistoricoPageState extends State<HistoricoPage> {
                 Expanded(
                   child: Text(
                     '${faltasQuantidades?.length} VISITAS NÃO REALIZADAS',
-                    style: GoogleFonts.dosis(textStyle: const TextStyle(color: Colors.red, fontSize: 24, fontWeight: FontWeight.bold)),
+                    style: GoogleFonts.dosis(
+                        textStyle: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold)),
                   ),
                 ),
                 Padding(
@@ -215,21 +226,27 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Filtro de historico',
                                         style: GoogleFonts.dosis(
-                                          textStyle: TextStyle(color: darkBlueColor, fontSize: 20, fontWeight: FontWeight.bold),
+                                          textStyle: TextStyle(
+                                              color: darkBlueColor,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 5, 0, 0),
                                         child: TextFormField(
                                           controller: lojaController,
                                           decoration: InputDecoration(
                                             border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(
+                                              borderRadius:
+                                                  BorderRadius.circular(
                                                 12.0,
                                               ),
                                               borderSide: BorderSide.none,
@@ -242,7 +259,8 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 5, 0, 0),
                                         child: TextFormField(
                                           controller: dtInicialController,
                                           inputFormatters: [maskFormatterData],
@@ -258,7 +276,8 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                             filled: true,
                                             fillColor: Colors.grey[300],
                                             border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(
+                                              borderRadius:
+                                                  BorderRadius.circular(
                                                 12.0,
                                               ),
                                               borderSide: BorderSide.none,
@@ -267,7 +286,8 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 5, 0, 0),
                                         child: TextFormField(
                                           controller: dtFinalController,
                                           validator: (value) {
@@ -283,7 +303,8 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                             filled: true,
                                             fillColor: Colors.grey[300],
                                             border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.circular(
+                                              borderRadius:
+                                                  BorderRadius.circular(
                                                 12.0,
                                               ),
                                               borderSide: BorderSide.none,
@@ -292,10 +313,12 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                         ),
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           ElevatedButton(
-                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.white),
                                             onPressed: () {
                                               lojaController.clear();
                                               dtInicialController.clear();
@@ -313,17 +336,29 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                             ),
                                           ),
                                           ElevatedButton(
-                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow[600]),
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    Colors.yellow[600]),
                                             onPressed: () async {
                                               _checkInternetConnection();
-                                              if (_formKey.currentState!.validate()) {
-                                                DateTime dtInicial = DateFormat('dd/MM/yyyy')
-                                                    .parse(dtInicialController.text); //DateTime.tryParse(dtInicialController.text) ?? DateTime.now();
-                                                DateTime dtFinal = DateFormat('dd/MM/yyyy').parse(dtFinalController.text);
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                DateTime dtInicial = DateFormat(
+                                                        'dd/MM/yyyy')
+                                                    .parse(dtInicialController
+                                                        .text); //DateTime.tryParse(dtInicialController.text) ?? DateTime.now();
+                                                DateTime dtFinal = DateFormat(
+                                                        'dd/MM/yyyy')
+                                                    .parse(
+                                                        dtFinalController.text);
                                                 pontos = await pontoPromotor(
                                                   email: user!.email,
-                                                  data1Filter: DateFormat('yyyy-MM-dd').format(dtInicial),
-                                                  data2Filter: DateFormat('yyyy-MM-dd').format(dtFinal),
+                                                  data1Filter:
+                                                      DateFormat('yyyy-MM-dd')
+                                                          .format(dtInicial),
+                                                  data2Filter:
+                                                      DateFormat('yyyy-MM-dd')
+                                                          .format(dtFinal),
                                                   faltasFilter: "false",
                                                 );
                                                 setState(() {});
@@ -371,7 +406,8 @@ class _HistoricoPageState extends State<HistoricoPage> {
                     itemCount: pontos?.length ?? 0,
                     itemBuilder: (context, index) {
                       final bool isChekin = pontos![index].dtCheckIn != null;
-                      DateTime dtReferenciaTime = DateTime.parse(pontos![index].dtReferencia);
+                      DateTime dtReferenciaTime =
+                          DateTime.parse(pontos![index].dtReferencia);
 
                       return Padding(
                         padding: const EdgeInsets.all(4.0),
@@ -384,25 +420,36 @@ class _HistoricoPageState extends State<HistoricoPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
                                         Text(
-                                          DateFormat('dd/MM').format(dtReferenciaTime),
-                                          style: GoogleFonts.dosis(textStyle: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                                          DateFormat('dd/MM')
+                                              .format(dtReferenciaTime),
+                                          style: GoogleFonts.dosis(
+                                              textStyle: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold)),
                                         ),
                                         SizedBox(
                                           width: 5,
                                         ),
                                         Text(
                                           '(${DateFormat('EEEE', 'pt-BR').format(dtReferenciaTime)})',
-                                          style: GoogleFonts.dosis(textStyle: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                                          style: GoogleFonts.dosis(
+                                              textStyle: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold)),
                                         ),
                                       ],
                                     ),
                                     isChekin
-                                        ? const Icon(Icons.check, color: Colors.white)
+                                        ? const Icon(Icons.check,
+                                            color: Colors.white)
                                         : const Icon(
                                             Icons.close,
                                             color: Colors.white,
@@ -413,33 +460,49 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                   children: [
                                     Text(
                                       'Loja: ${pontos![index].loja}',
-                                      style: GoogleFonts.dosis(textStyle: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                                      style: GoogleFonts.dosis(
+                                          textStyle: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold)),
                                     ),
                                   ],
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
                                         Text(
                                           'C.H.',
-                                          style: GoogleFonts.dosis(textStyle: TextStyle(color: Colors.white, fontSize: fontSize, fontWeight: FontWeight.bold)),
+                                          style: GoogleFonts.dosis(
+                                              textStyle: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: fontSize,
+                                                  fontWeight: FontWeight.bold)),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(left: 5),
+                                          padding:
+                                              const EdgeInsets.only(left: 5),
                                           child: Text(
                                             DateFormat('HH:mm').format(
-                                              DateTime.parse('${pontos![index].dtReferencia} ${pontos![index].hrCargaHoraria}'),
+                                              DateTime.parse(
+                                                  '${pontos![index].dtReferencia} ${pontos![index].hrCargaHoraria}'),
                                             ),
-                                            style:
-                                                GoogleFonts.dosis(textStyle: TextStyle(color: Colors.white, fontSize: fontSize, fontWeight: FontWeight.bold)),
+                                            style: GoogleFonts.dosis(
+                                                textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: fontSize,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
                                           ),
                                         ),
                                       ],
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 192, top: 3),
+                                      padding: const EdgeInsets.only(
+                                          left: 192, top: 3),
                                       child: Icon(
                                         Icons.pause,
                                         size: fontSize,
@@ -447,8 +510,13 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                       ),
                                     ),
                                     Text(
-                                      DateFormat('HH:mm').format(DateTime.parse('${pontos![index].dtReferencia} ${pontos![index].hrIntervalo}')),
-                                      style: GoogleFonts.dosis(textStyle: TextStyle(color: Colors.white, fontSize: fontSize, fontWeight: FontWeight.bold)),
+                                      DateFormat('HH:mm').format(DateTime.parse(
+                                          '${pontos![index].dtReferencia} ${pontos![index].hrIntervalo}')),
+                                      style: GoogleFonts.dosis(
+                                          textStyle: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: fontSize,
+                                              fontWeight: FontWeight.bold)),
                                     ),
                                   ],
                                 ),
@@ -467,12 +535,16 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                         ? Container()
                                         : Text(
                                             "Visita não realizada",
-                                            style: GoogleFonts.dosis(textStyle: TextStyle(color: Colors.white, fontSize: 18)),
+                                            style: GoogleFonts.dosis(
+                                                textStyle: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 18)),
                                           ),
                                   ],
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     isChekin
                                         ? const Icon(
@@ -482,12 +554,19 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                         : Container(),
                                     isChekin
                                         ? Text(
-                                            DateFormat('HH:mm').format(DateTime.parse(pontos![index].dtCheckIn.toString())),
-                                            style: GoogleFonts.dosis(textStyle: const TextStyle(color: Colors.white, fontSize: 18)),
+                                            DateFormat('HH:mm').format(
+                                                DateTime.parse(pontos![index]
+                                                    .dtCheckIn
+                                                    .toString())),
+                                            style: GoogleFonts.dosis(
+                                                textStyle: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 18)),
                                           )
                                         : Container(),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 213.0),
+                                      padding:
+                                          const EdgeInsets.only(left: 213.0),
                                       child: isChekin
                                           ? const Icon(
                                               Icons.logout,
@@ -497,8 +576,17 @@ class _HistoricoPageState extends State<HistoricoPage> {
                                     ),
                                     isChekin
                                         ? Text(
-                                            DateFormat('HH:mm').format(DateTime.parse(pontos![index].dtCheckOut.toString())),
-                                            style: GoogleFonts.dosis(textStyle: const TextStyle(color: Colors.white, fontSize: 18)),
+                                            pontos![index].dtCheckOut != null
+                                                ? DateFormat('HH:mm').format(
+                                                    DateTime.parse(
+                                                        pontos![index]
+                                                            .dtCheckOut
+                                                            .toString()))
+                                                : '', // Mostra a hora formatada apenas se dtCheckOut não for nulo
+                                            style: GoogleFonts.dosis(
+                                                textStyle: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 18)),
                                           )
                                         : Container(),
                                   ],

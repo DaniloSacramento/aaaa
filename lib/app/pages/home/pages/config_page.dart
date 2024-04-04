@@ -6,6 +6,7 @@ import 'package:acessonovo/app/pages/alterar_senha/alterar_senha.dart';
 import 'package:acessonovo/app/pages/diretrizes/diretrizes_page.dart';
 import 'package:acessonovo/app/pages/input/input_screen.dart';
 import 'package:acessonovo/app/services/escala_service.dart';
+import 'package:acessonovo/app/services/initarvarconta.dart';
 
 import 'package:acessonovo/app/widget/app_color.dart';
 import 'package:acessonovo/app/widget/tringulo_pointer.dart';
@@ -39,6 +40,131 @@ class _ConfigPageState extends State<ConfigPage> {
     user = UserPromote.fromMap(jsonDecode(result!)['data']);
     escalas = await fetchEscalas(user!.email);
     setState(() {});
+  }
+Future<void> _showDeleteAccountConfirmationDialog(BuildContext context) async {
+    bool confirmDelete = false;
+    bool isDeleteAccountChecked = false;
+    String errorMessage = '';
+
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return AlertDialog(
+              title: Text(
+                'Excluir Minha Conta',
+                style: GoogleFonts.dosis(
+                  textStyle: TextStyle(
+                    fontSize: 26,
+                    color: darkBlueColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'Todos os seus dados serão apagados, deseja continuar?',
+                    style: GoogleFonts.dosis(
+                      textStyle: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: isDeleteAccountChecked,
+                        onChanged: (value) {
+                          setState(() {
+                            isDeleteAccountChecked = value ?? false;
+                            confirmDelete = isDeleteAccountChecked;
+                          });
+                        },
+                      ),
+                      Text(
+                        'Estou ciente dessa ação',
+                        style: GoogleFonts.dosis(
+                          textStyle: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (errorMessage.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        errorMessage,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(
+                    'Cancelar',
+                    style: GoogleFonts.dosis(
+                      textStyle: TextStyle(
+                        fontSize: 17,
+                        color: darkBlueColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                if (confirmDelete)
+                  TextButton(
+                    child: Text(
+                      'Confirmar',
+                      style: GoogleFonts.dosis(
+                        textStyle: TextStyle(
+                          fontSize: 17,
+                          color: darkBlueColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    onPressed: () async {
+                      bool deleted = await DeixarUserInativo().deixarUserInativo(email: user!.email);
+                      if (deleted) {
+                        SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                        await sharedPreferences.clear();
+
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const InputScreen(),
+                          ),
+                        );
+                      } else {
+                        setState(() {
+                          errorMessage = 'Erro ao excluir conta. Tente novamente!';
+                        });
+                      }
+                    },
+                  ),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
 
   Future<void> _showExitConfirmationDialog(BuildContext context) async {
@@ -280,6 +406,7 @@ class _ConfigPageState extends State<ConfigPage> {
                       ),
                     ),
                   ),
+                  
                   SizedBox(
                     height: telaHeight * 0.02,
                   ),
@@ -293,6 +420,24 @@ class _ConfigPageState extends State<ConfigPage> {
                     },
                     child: Text(
                       'Diretrizes',
+                      style: GoogleFonts.dosis(
+                        textStyle: const TextStyle(color: Colors.black, fontSize: 17),
+                      ),
+                    ),
+                  ),
+                   SizedBox(
+                    height: telaHeight * 0.02,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: yellowColor,
+                      minimumSize: const Size(double.infinity, 50),
+                    ),
+                    onPressed: () async {
+                      _showDeleteAccountConfirmationDialog(context);
+                    },
+                    child: Text(
+                      'Excluir conta',
                       style: GoogleFonts.dosis(
                         textStyle: const TextStyle(color: Colors.black, fontSize: 17),
                       ),

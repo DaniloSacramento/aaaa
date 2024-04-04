@@ -31,7 +31,8 @@ class _QrCodePageState extends State<QrCodePage> {
       });
       controller.pauseCamera();
       try {
-        final apiResponse = await ValidarCodigoEmpresa().validarCodigoQr(scannedCode);
+        final apiResponse =
+            await ValidarCodigoEmpresa().validarCodigoQr(scannedCode);
 
         // ignore: use_build_context_synchronously
         Navigator.push(
@@ -98,11 +99,11 @@ class _QrCodePageState extends State<QrCodePage> {
           color: Colors.white,
         ),
         backgroundColor: darkBlueColor,
-      title: Image.asset(
-            F.imageComLogoBranca,
-            height: 100,
-            width: 250,
-          ),
+        title: Image.asset(
+          F.imageComLogoBranca,
+          height: 100,
+          width: 250,
+        ),
         centerTitle: true,
       ),
       body: Container(

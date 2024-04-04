@@ -24,9 +24,47 @@ class _TermoPageState extends State<TermoPage> {
   @override
   void initState() {
     super.initState();
-    fetchData();
+      fetchData();
+      verificarTermo();
+  
+  }Future<void> verificarTermo() async { 
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final result = sharedPreferences.getString('data');
+    final user = UserPromote.fromMap(jsonDecode(result!)['data']);
+    final response = await http.post(
+      Uri.parse(ConstsApi.termoAceite),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'authorization': ConstsApi.basicAuth,
+      },
+      body: jsonEncode(
+        <String, String>{
+          'email': user.email,
+        },
+      ));
+       if (response.statusCode == 200) {
+    final utf8decoder = Utf8Decoder();
+    final data = jsonDecode(utf8decoder.convert(response.bodyBytes));
+    if (data['data'] == "O termo já foi aceito.") {
+    
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(initialHomePage: InitialHomePage.escala),
+        ),
+        (r) => false,
+      );
+    } else {
+      // Termo não foi aceito, exibir a tela de termos normalmente
+      setState(() {
+        responseData = data['data'];
+      });
+    }
+  } else {
+    print('Erro');
   }
-
+}
+    
   Future<void> fetchData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final result = sharedPreferences.getString('data');
@@ -55,43 +93,11 @@ class _TermoPageState extends State<TermoPage> {
     }
   }
 
-  Future<void> initializeSharedPreferences() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setBool('termosAceitos', false); // Inicialmente, os termos não foram aceitos
-  }
-
-  void checkTermsAccepted() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    final termosAceitos = sharedPreferences.getBool('termosAceitos') ?? false;
-    if (termosAceitos) {
-      // ignore: use_build_context_synchronously
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(
-              initialHomePage: InitialHomePage.escala,
-            ),
-          ),
-          (r) => false);
-    }
-  }
-
-  void onTermsAccepted() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setBool('termosAceitos', true);
-    // ignore: use_build_context_synchronously
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomePage(
-            initialHomePage: InitialHomePage.escala,
-          ),
-        ),
-        (r) => false);
-  }
+  
+  
 
   Future<void> _checkInternetConnection() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
+    var connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
       showDialog(
@@ -146,7 +152,7 @@ class _TermoPageState extends State<TermoPage> {
                             color: darkBlueColor,
                             fontWeight: FontWeight.bold,
                           ),
-                        ),
+                        ), 
                         textAlign: TextAlign.start,
                       ),
                       Text('Atualizado em ${DateFormat('dd/MM/yyyy').format(DateTime.parse(responseData['dtReferencia']))}',
@@ -156,7 +162,7 @@ class _TermoPageState extends State<TermoPage> {
                               fontWeight: FontWeight.bold,
                             ),
                           )),
-                      Text(
+                      Text(          
                         'Versão: ${responseData['versao']}',
                         style: GoogleFonts.dosis(
                           textStyle: const TextStyle(
@@ -165,9 +171,11 @@ class _TermoPageState extends State<TermoPage> {
                           ),
                         ),
                       ),
-                    
                       SizedBox(
-                        height: screenHeight * 0.56,
+                        height: screenHeight * 0.02,
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.55,
                         child: SingleChildScrollView(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -183,11 +191,10 @@ class _TermoPageState extends State<TermoPage> {
                           ),
                         ),
                       ),
-                     SizedBox(
-                       height: screenHeight * 0.06,
-                     ),
                       SizedBox(
-                        
+                        height: screenHeight * 0.035,
+                      ),
+                      SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -203,9 +210,7 @@ class _TermoPageState extends State<TermoPage> {
                                   setState(() {
                                     isLoading = true;
                                   });
-
-                                  TermoAceitePromotor().termoAceiteService();
-                                  onTermsAccepted();
+                                       TermoAceitePromotor().termoAceiteService();
                                   setState(() {
                                     isLoading = true;
                                   });

@@ -284,11 +284,11 @@ class _MyAppState extends State<MyApp> {
         automaticallyImplyLeading: false,
         backgroundColor: darkBlueColor,
         centerTitle: true,
-        title: Image.asset(
-          'assets/Captura de tela 2023-09-19 181800.png',
-          fit: BoxFit.contain,
-          height: 62,
-        ),
+       title: Image.asset(
+            F.imageComLogoBranca,
+            height: 100,
+            width: 250,
+          ),
       ),
       body: CustomPaint(
         painter: TrianguloPainter(),

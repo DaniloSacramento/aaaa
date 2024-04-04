@@ -57,7 +57,7 @@ class _EmailSucessoState extends State<EmailSucesso> {
               const SizedBox(height: 15),
               
               SizedBox(
-                height: telaHeight * 0.07,
+                height: telaHeight * 0.27,
               ),
               Center(
                 child: Text(
@@ -136,6 +136,7 @@ class _EmailSucessoState extends State<EmailSucesso> {
                             style: GoogleFonts.dosis(
                               textStyle: const TextStyle(
                                 fontSize: 17,
+                                color: Colors.black
                               ),
                             ),
                           ),

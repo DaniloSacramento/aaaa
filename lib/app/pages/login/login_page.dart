@@ -89,14 +89,10 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   bool _showPassword = false;
   bool _isLoading = false;
-  bool _isFormValid = false;
-  bool _isButtonDisabled = false;
-  final bool _buttonClicked = false;
+ 
 
   @override
   Widget build(BuildContext context) {
-    const double buttonWidthPercentage = 0.95;
-    const double buttonHeightPercentage = 0.07;
     return Scaffold(
             appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -335,7 +331,5 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ));
-  }
-
-
-}
+      }
+    }

@@ -17,4 +17,5 @@ class ConstsApi {
   static const String validarCodigoEmpresa = '$baseUrl/api/auth/verify/empresa/codigo';
   static const String statusService = '$baseUrl/api/promotor/status';
   static const String fotoURL = "http://acesso.novoatacarejo.com";
+  static const String inativarConta = '$baseUrl/api/promotor/inativar';
 }
